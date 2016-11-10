@@ -8,14 +8,14 @@ Note: functions labelled [FUTURE] are currenly being under development, and will
 
 Primary data communication interface of Monarco HAT is an SPI (Serial Peripheral Interface). Monarco HAT act as an *SPI Slave*, host device (Raspbery Pi) act as an *SPI Master*.
 
-SPI communication is organized into data transfers. Each data transfer is initiated by Master which send N bytes to Slave, and simultaneously Master receive N bytes from Slave.
+SPI communication is organized into data transfers. Each data transfer is initiated by *SPI Master* which send N bytes to *SPI Slave*, and simultaneously *SPI Master* receive N bytes from *SPI Slave*.
 
 
 ## Data transfer basic principles
 
 For such realtime input/output device like the Monarco HAT, it is common to define two classes of data communication:
 
-* **Proces (cyclic) data channel - PDC:** contains input/output values - like current state of digital and analog inputs, input-based counters, anddemanded state of digital and analog outpus. These values are required to be continuously refreshed by *SPI Master*, usually synchronously with each execution period of upper level control algorithm (e.g. task in realtime control system software).
+* **Proces (cyclic) data channel - PDC:** contains input/output values - like current state of digital and analog inputs, input-based counters, and demanded state of digital and analog outpus. These values are required to be continuously refreshed by *SPI Master*, usually synchronously with each execution period of upper level control algorithm (e.g. task in realtime control system software).
 * **Service (acyclic) data channel - SDC:** is used for configuration and diagnostics values - like RS-485 baudrate and mode, analog inputs type and range, input/output technology functions configuration, firmware version information, and various diagnostics counters. These values do not have to be read or written all the time or with each data transfer. So they can be communicated asynchronously using shared low bandwidth channel.
 
 For ease of implementation of both *SPI Master* and *SPI Slave*, only two types of SPI transfer with predefined length are defined. The high level transfer structure is the same for both communication directions:
@@ -47,7 +47,7 @@ If valid process data are not received by Monarco HAT (*SPI Slave*) for longer t
 Byte order of 16/32 bit values is little-endian, e.g. least significant byte first.
 
 
-## Standard transfer structure - Monarco HAT RX (Master to Slave)
+## Standard transfer structure - Monarco HAT RX (SPI Master to Slave)
 
 <pre>
 offset  size  content
@@ -110,7 +110,7 @@ Example:
 
 ### CRC
 
-Master to slave data integrity is protected by CRC. Monarco HAT ignores data frames with bad CRC.
+Master to Slave data integrity is protected by 16bit CRC (cyclic redundancy check). Monarco HAT (Slave) ignores data frames with bad CRC.
 
 There are numerous varieties of CRC-16 in common use which differs by the polynomial and its representation. Monarco HAT use the `Modbus RTU CRC-16` / `CRC-16-IBM` type (polynomial: `x^16 + x^15 + x^2 + 1` which is `0x8005` (normal) / `0xA001` (reversed), initial value: `0xFFFF`). 
 
@@ -152,7 +152,7 @@ offset
 
 ### CRC
 
-Slave to Master data integrity is protected by CRC. Master should ignore data frames received with bad CRC.
+Slave to Master data integrity is also protected by 16bit CRC. Master should ignore data frames received with bad CRC.
 
 The same CRC type is used as for the RX (Master to Slave) direction.
 
@@ -160,6 +160,8 @@ The same CRC type is used as for the RX (Master to Slave) direction.
 ## Service data channel principles
 
 Service data channel (SDC) provides acyclic access to set of status and configuration registers. Register is identified by `ADDRESS` (12 bit, `0x000` to `0xFFF`) and contains 16 bit `VALUE` data. 
+
+In current firmware version, all register values are initialised to its defaults after power on (or Monarco HAT MCU reset). Persistent storage of important configuration registers is planned for future versions.
 
 ### Protocol data structure and logic
 

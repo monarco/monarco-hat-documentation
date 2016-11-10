@@ -14,6 +14,7 @@
 
 ## Features under development
 
+* Ability to disable UART
 * Configurable deboounce filters on digital inputs
 * Configurable low pass filters on analog inputs
 * Continuous input sampling mode (not triggered by SPI transfer)
@@ -22,6 +23,7 @@
 * Persistent counter values
 * Watchdog for Rapberry Pi
 * Pulse/Dir profile generation for positioning (Motion Control)
+* Persistent configuration parameters
 
 
 ## Known issues
