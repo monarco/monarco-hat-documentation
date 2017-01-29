@@ -1,6 +1,6 @@
 # Monarco HAT SPI Protocol Reference Manual
 
-**Valid for firmware version: v2.004 (`0x2004`)**
+**Valid for firmware version: v2.005 (`0x2005`)**
 
 Note: functions labelled [FUTURE] are currenly being under development, and will be part of next firmware release.
 
@@ -238,6 +238,7 @@ Note: Registers are read-only [R], read-write [RW] or write-only [W].
  * `bit 07..15` - RESERVED (write zeros)
 * **0x012: Host UART Baudrate [RW]**
  * Unit: 100 Bd, Min: 3 (300 Bd), Max 10000 (1 MBd)
+ * Set to 0 to disable Host UART (set Monarco pins to Hi-Z) when you are using it for another external device. 
 * **0x014: RS-485 Bytes Received Diagnostics Counter [R]**
 * **0x015: RS-485 Bytes Transmitted Diagnostics Counter [R]**
 * **0x018: RS-485 RX Framing Error Diagnostics Counter [R]**

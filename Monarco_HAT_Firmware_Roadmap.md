@@ -1,6 +1,11 @@
 # Monarco HAT Firmware Development Roadmap
 
 
+## Features implemented in v2.005 Release
+
+* Ability to disable host side UART by setting its baudrate to 0 (in register `0x012`)
+* Fixed PWM behaviour on frequency change, fixed setting PWM2 frequency at all
+
 ## Features implemented in v2.004 Release
 
 * Digital inputs. COUNTER function with up-count on rising/falling/both edge mode and quadrature encoder mode.
@@ -14,7 +19,6 @@
 
 ## Features under development
 
-* Ability to disable UART
 * Configurable deboounce filters on digital inputs
 * Configurable low pass filters on analog inputs
 * Continuous input sampling mode (not triggered by SPI transfer)
