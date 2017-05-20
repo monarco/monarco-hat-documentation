@@ -278,6 +278,11 @@ Note: Registers are read-only [R], read-write [RW] or write-only [W].
         * `3`: [FUTURE] both  
     * `bit 10..15` - RESERVED (write zeros)
 
+---
+
+* **0xF00-0xF3F: Persistent parameters area (64 registers, 128 byte)**
+    * Now for manufacturer use only.
+
 
 ## SPI data transfer example
 

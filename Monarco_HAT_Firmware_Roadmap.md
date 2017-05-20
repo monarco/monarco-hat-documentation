@@ -1,10 +1,19 @@
 # Monarco HAT Firmware Development Roadmap
 
+Monarco HAT firmware public repository: <https://github.com/monarco/monarco-hat-firmware-bin>
+
+
+## Features implemented in v2.006 Release
+
+* Analog inputs fatory calibration - supported since HW batch C (S/N 1701C...)
+* Persistent parameters in flash memory - now for manufacturer use only
+
 
 ## Features implemented in v2.005 Release
 
 * Ability to disable host side UART by setting its baudrate to 0 (in register `0x012`)
 * Fixed PWM behaviour on frequency change, fixed setting PWM2 frequency at all
+
 
 ## Features implemented in v2.004 Release
 
