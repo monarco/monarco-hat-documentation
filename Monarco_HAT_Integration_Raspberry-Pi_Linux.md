@@ -5,21 +5,21 @@
 Raspberry Pi IOs in use by Monarco HAT [physical pin numbers on 40pin header]:
 
 * **SPI-0** with CE0 [19, 21, 23, 24]:
- * Primary data communication channel with Monarco MCU
+  * Primary data communication channel with Monarco MCU
 * **UART-0** [8, 10]:
- * RS-485 forwarded through MCU (can be disabled) / MCU firmware update
+  * RS-485 forwarded through MCU (can be disabled) / MCU firmware update
 * **I2C-1** (SCL, SDA) [3, 5]:
- * Real Time Clock, 1-Wire controller
+  * Real Time Clock, 1-Wire controller
 * **I2C-0** (ID_SC, ID_SD) [27, 28]:
- * ID EEPROM according to the HAT standard
+  * ID EEPROM according to the HAT standard
 * **GPIO20** [38]:
- * MCU bootloader enable (high active)
+  * MCU bootloader enable (high active)
 * **GPIO21** [40]:
- * MCU RESETn (low active)
+  * MCU RESETn (low active)
 * **GPIO26** [37]:
- * ID EEPROM write enable (low active)
+  * ID EEPROM write enable (low active)
 * **GPIO05** [29], **GPIO06** [31], **GPIO23** [16], **GPIO24** [18]:
- * Optional use with MCU's GPIO. These signals can be freely used, MCU keeps them floating by default.
+  * Optional use with MCU's GPIO. These signals can be freely used, MCU keeps them floating by default.
 
 For additional details, please see [Monarco HAT Hardware Reference Manual](Monarco_HAT_Hardware_Reference_Manual.pdf).
 
@@ -66,10 +66,10 @@ UART-0 is also used for Monarco HAT MCU firmware update using bootloader embedde
 Several Raspberry Pi GPIOs are connected to Monarco HAT MCU:
 
 * **GPIO21** [40]: 
- * Low level brings MCU to RESET state, useful for initializing MCU to default state during communication development, and for bootloader activation.  
+  * Low level brings MCU to RESET state, useful for initializing MCU to default state during communication development, and for bootloader activation.  
 * **GPIO20** [38]:
- * High level enables MCU bootloader for firmware update after reset.
+  * High level enables MCU bootloader for firmware update after reset.
 * **GPIO26** [37]:
- * Low level enabled write to ID EEPROM on I2C-0. Note: On Raspberry Pi 3, I2C-0 communication does not work well during Linux runtime, but there is almost no reason for directly reading or writing ID EEPROM.
+  * Low level enabled write to ID EEPROM on I2C-0. Note: On Raspberry Pi 3, I2C-0 communication does not work well during Linux runtime, but there is almost no reason for directly reading or writing ID EEPROM.
 * **GPIO05** [29], **GPIO06** [31], **GPIO23** [16], **GPIO24** [18]:
- * Freely usable signals connected to MCU. Standard firmware keep them floating. Intended for future use or custom firware functions.
+  * Freely usable signals connected to MCU. Standard firmware keep them floating. Intended for future use or custom firware functions.
