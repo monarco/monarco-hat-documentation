@@ -30,6 +30,13 @@ On the **I2C-0** (`/dev/i2c-0`) Raspberry Pi bus, Monarco HAT contains EEPROM wi
 
 For additional details about Device Tree Overlay and notes for Raspberry Pi 3 and for `owserver` users, please see [Monarco HAT Hardware Reference Manual](Monarco_HAT_Hardware_Reference_Manual.pdf), Chapter *3.1.2 ID EEPROM*.
 
+## NOTE FOR RASPBIAN USERS
+
+Since 2017-06 release, Raspbian Jessie upgraded kernel from 4.4 to 4.9 searies, which partially breaks compatibility with device-tree overlay in Monarco HAT EEPROM.
+
+Switching `/dev/ttyAMA0` UART to GPIO header does not work anymore on Raspberry Pi 3 nor Raspberry Pi 2 with current Raspbian because of change in device-tree nodes names.
+
+**Please add [monarco-fix-4-9.dtbo](device-tree/monarco-fix-4-9.dtbo) to your `/boot/overlays` directory, and add `dtoverlay=monarco-fix-4-9` line to the `/boot/config.txt`.**
 
 ## Onboard I2C Devices
 
