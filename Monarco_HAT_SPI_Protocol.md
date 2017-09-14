@@ -21,12 +21,12 @@ For such realtime input/output device like the Monarco HAT, it is common to defi
 For ease of implementation of both *SPI Master* and *SPI Slave*, only two types of SPI transfer with predefined length are defined. The high level transfer structure is the same for both communication directions:
 
 * **Standard transfer, length = 26 bytes:**
- * 4 bytes: Service data channel (SDC)
- * 20 bytes: Process data channel (PDC)
- * 2 bytes: Cyclic Redundancy Check (CRC)
+  * 4 bytes: Service data channel (SDC)
+  * 20 bytes: Process data channel (PDC)
+  * 2 bytes: Cyclic Redundancy Check (CRC)
 * **[FUTURE] Service data only transfer, length = 6 bytes:**
- * 4 bytes: Service data channel (SDC)
- * 2 bytes: Cyclic Redundancy Check (CRC)
+  * 4 bytes: Service data channel (SDC)
+  * 2 bytes: Cyclic Redundancy Check (CRC)
 
 Length of process channel is 20 bytes by default. For future extensions, *SPI Master* can use *Service data only transfer* to reconfigure process channel contens. In such case, length of *Standard transfer* can be changed.
 
@@ -199,10 +199,10 @@ If no register is currently required to be read or written, it is recommended to
 Note: Registers are read-only [R], read-write [RW] or write-only [W].
 
 * **0x000: Status Word [RW]**
- * Read: 
-  * `0xABCD` = OK
-  *  TODO: "watchdog triggered"
- * Write - accept only `0xABCD` = reset status
+  * Read:
+    * `0xABCD` = OK
+    *  TODO: "watchdog triggered"
+  * Write - accept only `0xABCD` = reset status
 
 ---
 
@@ -211,7 +211,7 @@ Note: Registers are read-only [R], read-write [RW] or write-only [W].
 * **0x003: Hardware Version - Low Word [R]**
 * **0x004: Hardware Version - High Word [R]**
 * **0x005: MCU Unique ID 1 [R]**
- * Monarco HAT onboard microcontroller (MCU) contains factory programmed 16 bytes unique identification number. It can be read from 4 consecutive registers.    
+  * Monarco HAT onboard microcontroller (MCU) contains factory programmed 16 bytes unique identification number. It can be read from 4 consecutive registers.
 * **0x006: MCU Unique ID 2 [R]**
 * **0x007: MCU Unique ID 3 [R]**
 * **0x008: MCU Unique ID 4 [R]**
@@ -219,26 +219,26 @@ Note: Registers are read-only [R], read-write [RW] or write-only [W].
 ---
 
 * **0x00A: HW Config 1 [RW]**
- * `bit 00` - RS-485 termination resistor enable
- * `bit 01` - AIN1 current loop shunt resistor enable
- * `bit 02` - AIN2 current loop shunt resistor enable 
- * `bit 03..15` - RESERVED (write zeros)
+  * `bit 00` - RS-485 termination resistor enable
+  * `bit 01` - AIN1 current loop shunt resistor enable
+  * `bit 02` - AIN2 current loop shunt resistor enable
+  * `bit 03..15` - RESERVED (write zeros)
 
 * **0x00F: PDC Watchdog Timeout [RW]**
- * Unit: 1 ms; 0 = watchdog disabled; default = 100
+  * Unit: 1 ms; 0 = watchdog disabled; default = 100
 
 ---
 
 * **0x010: RS-485 Baudrate [RW]**
- * Unit: 100 Bd, Min: 3 (300 Bd), Max 10000 (1 MBd)
+  * Unit: 100 Bd, Min: 3 (300 Bd), Max 10000 (1 MBd)
 * **0x011: RS-485 Mode [RW]**
- * `bit 00..02` - parity - `0: none, 1: even, 2: odd`
- * `bit 03..04` - data bits: `0: 5, 1: 6, 2: 7, 3: 8`
- * `bit 05..06` - stop bits: `0: half, 1: one, 2: one and half, 3: two`
- * `bit 07..15` - RESERVED (write zeros)
+  * `bit 00..02` - parity - `0: none, 1: even, 2: odd`
+  * `bit 03..04` - data bits: `0: 5, 1: 6, 2: 7, 3: 8`
+  * `bit 05..06` - stop bits: `0: half, 1: one, 2: one and half, 3: two`
+  * `bit 07..15` - RESERVED (write zeros)
 * **0x012: Host UART Baudrate [RW]**
- * Unit: 100 Bd, Min: 3 (300 Bd), Max 10000 (1 MBd)
- * Set to 0 to disable Host UART (set Monarco pins to Hi-Z) when you are using it for another external device. 
+  * Unit: 100 Bd, Min: 3 (300 Bd), Max 10000 (1 MBd)
+  * Set to 0 to disable Host UART (set Monarco pins to Hi-Z) when you are using it for another external device.
 * **0x014: RS-485 Bytes Received Diagnostics Counter [R]**
 * **0x015: RS-485 Bytes Transmitted Diagnostics Counter [R]**
 * **0x018: RS-485 RX Framing Error Diagnostics Counter [R]**
@@ -291,20 +291,20 @@ Master > Slave (hex): 00 00 00 00 01 FF 01 00 00 7D 00 00 00 00 00 00 80 0C 00 0
 </pre>
 
 * Service channel request [4 bytes]:
- * Read register `0x000` request
+  * Read register `0x000` request
 * Process data [20 bytes]:
- * Control byte: `0x01`: status LED mask on, value off
- * User LEDs mask: `0xFF`
- * User LEDs value: `0x01`
- * Digital outputs: `0x00`
- * PWM1 frequency: `0x7D00` = `32000`: prescaler = 1, TOP = 32000: frequency = 1000 Hz
- * PWM1 Channel A (DOUT1) duty cycle: `0x0000`: PWM disabled
- * PWM1 Channel B (DOUT2) duty cycle: `0x0000`: PWM disabled
- * PWM1 Channel C (DOUT3) duty cycle: `0x0000`: PWM disabled
- * PWM2 frequency: `0x0C80` = `3200`: prescaler = 1, TOP = 3200: frequency = 10000 Hz
- * PWM2 Channel A (DOUT4) duty cycle: `0x0000`: PWM disabled
- * Analog output 1: `0x0999` = `2457`: 6.0 V
- * Analog output 2: `0x04CC` = `1228`: 3.0 V
+  * Control byte: `0x01`: status LED mask on, value off
+  * User LEDs mask: `0xFF`
+  * User LEDs value: `0x01`
+  * Digital outputs: `0x00`
+  * PWM1 frequency: `0x7D00` = `32000`: prescaler = 1, TOP = 32000: frequency = 1000 Hz
+  * PWM1 Channel A (DOUT1) duty cycle: `0x0000`: PWM disabled
+  * PWM1 Channel B (DOUT2) duty cycle: `0x0000`: PWM disabled
+  * PWM1 Channel C (DOUT3) duty cycle: `0x0000`: PWM disabled
+  * PWM2 frequency: `0x0C80` = `3200`: prescaler = 1, TOP = 3200: frequency = 10000 Hz
+  * PWM2 Channel A (DOUT4) duty cycle: `0x0000`: PWM disabled
+  * Analog output 1: `0x0999` = `2457`: 6.0 V
+  * Analog output 2: `0x04CC` = `1228`: 3.0 V
 * CRC-16 [2 bytes]: `0xC6E1`
 
 <pre>
@@ -312,16 +312,16 @@ Slave > Master (hex): CD AB 00 00 80 00 00 00 FF FF 00 00 5F 03 00 00 44 33 22 1
 </pre>
 
 * Service channel response [4 bytes]:
- * Read register `0x000` success, value `0xABCD`
+  * Read register `0x000` success, value `0xABCD`
 * Process data [20 bytes]: 
- * Status byte: `0x00`
- * RESERVED: `0x0000`
- * Digital inputs: `0x00`
- * COUNTER1 Value: `0x0000_FFFF`
- * COUNTER2 Value: `0x0000_035F`
- * COUNTER2 Capture: `0x1122_3344`
- * Analog input 1: `0x0994` = `2452`: 5.988 V
- * Analog input 2: `0x04C7` = `1223`: 2.987 V
+  * Status byte: `0x00`
+  * RESERVED: `0x0000`
+  * Digital inputs: `0x00`
+  * COUNTER1 Value: `0x0000_FFFF`
+  * COUNTER2 Value: `0x0000_035F`
+  * COUNTER2 Capture: `0x1122_3344`
+  * Analog input 1: `0x0994` = `2452`: 5.988 V
+  * Analog input 2: `0x04C7` = `1223`: 2.987 V
 * CRC-16 [2 bytes]: `0x660F`
 
 
