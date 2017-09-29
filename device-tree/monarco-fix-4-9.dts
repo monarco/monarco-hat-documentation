@@ -1,13 +1,23 @@
 /dts-v1/;
 /plugin/;
 
-/* Raspbian kernel upgrade from 4.4 to 4.9 breaks compatibility by changing
-   UARTs names from uart@7e201000 to serial@7e201000 and the same for uart@7e215040.
-   This leads to ttyAMA0 not working anymore automatically using overlay from
-   onboard EEPROM with the Monarco HAT.
-   Following overlay fix this issue. Please add monarco-fix-4-9.dtbo to /boot/overlay
-   and a new line dtoverlay=monarco-fix-4-9 to /boot/config.txt.
-*/
+/*
+ * Device Tree Overlay for the Monarco HAT - FIX for Raspbian with Linux kernel 4.9
+ *
+ * Raspbian Linux kernel upgrade from 4.4 to 4.9 breaks compatibility by changing
+ * UARTs names from uart@7e201000 to serial@7e201000 and the same for uart@7e215040.
+ * This leads to ttyAMA0 not working anymore automatically using overlay from
+ * onboard EEPROM with the Monarco HAT.
+ *
+ * Following overlay fix this issue. Please add monarco-fix-4-9.dtbo to /boot/overlay
+ * and a new line dtoverlay=monarco-fix-4-9 to /boot/config.txt.
+ *
+ * Author: Vlastimil Setka
+ * REX Controls s.r.o.
+ * https://www.monarco.io
+ * https://github.com/monarco/
+ * https://www.rexcontrols.com
+ */
 
 / {
   compatible = "brcm,bcm2708";
