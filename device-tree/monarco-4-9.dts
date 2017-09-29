@@ -1,0 +1,100 @@
+/dts-v1/;
+/plugin/;
+
+/*
+ * Device Tree Overlay for the Monarco HAT
+ *
+ * This overlay is flashed (units shipped since 2017/10) in the onboard EEPROM
+ * according to the HAT specification.
+ *
+ * Designed for Raspbian with Linux kernel 4.9 (changed serial* aliases paths).
+ *
+ * WARNING: Not compatible with Linux kernel 4.4 previously shipped with Raspbian,
+ * UART swapping and aliases are broken.
+ *
+ * Author: Vlastimil Setka
+ * REX Controls s.r.o.
+ * https://www.monarco.io
+ * https://github.com/monarco/
+ * https://www.rexcontrols.com
+ */
+
+/ {
+    compatible = "brcm,bcm2708";
+
+    /* Enable SPI for Monarco HAT */
+
+    fragment@1 {
+        target = <&spi0>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    /* Enable I2C for Monarco HAT */
+
+    fragment@2 {
+        target = <&i2c_arm>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "okay";
+            mcp7941x@6f {
+                compatible = "microchip,mcp7941x";
+                reg = <0x6f>;
+            };
+            ds2482@18 {
+                compatible = "maxim,ds2482";
+                reg = <0x18>;
+            };
+        };
+    };
+
+    /* RPi3: switch uart0 (alias serial0) back to HAT pins, uart1 (alias serial1) for Bluetooth */
+
+    /* We can not reference &uart0_pins and &uart1_pins directly
+       as they are are not defined in dt before RPi 3, so we define them in &gpio */
+
+    fragment@3 {
+        target = <&gpio>;
+        __overlay__ {
+            uart0_pins: uart0_pins {
+                brcm,pins;
+                brcm,function;
+                brcm,pull;
+            };
+            uart1_pins: uart1_pins {
+                brcm,pins = <32 33>;
+                brcm,function = <2>;
+                brcm,pull = <0 2>;
+            };
+        };
+    };
+
+    fragment@4 {
+        target = <&uart0>;
+        __overlay__ {
+            pinctrl-names = "default";
+            pinctrl-0 = <&uart0_pins>;
+            status = "okay";
+        };
+    };
+
+    fragment@5 {
+        target = <&uart1>;
+        __overlay__ {
+            pinctrl-names = "default";
+            pinctrl-0 = <&uart1_pins>;
+            status = "okay";
+        };
+    };
+
+    fragment@6 {
+        target-path = "/aliases";
+        __overlay__ {
+            serial0 = "/soc/serial@7e201000";
+            serial1 = "/soc/serial@7e215040";
+        };
+    };
+
+};
