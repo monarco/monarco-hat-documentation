@@ -1,8 +1,14 @@
 # Monarco HAT SPI Protocol Reference Manual
 
-**Valid for firmware version: v2.005 (`0x2005`)**
+**Valid for firmware version: v2.006 (`0x2006`)**
 
 Note: functions labelled [FUTURE] are currenly being under development, and will be part of next firmware release.
+
+## Other Resources
+
+* [Monarco Homepage - https://www.monarco.io/](https://www.monarco.io/)
+* [Repository - Documentation for the Monarco HAT](https://github.com/monarco/monarco-hat-documentation)
+
 
 ## Introduction
 
@@ -47,7 +53,7 @@ If valid process data are not received by Monarco HAT (*SPI Slave*) for longer t
 Byte order of 16/32 bit values is little-endian, e.g. least significant byte first.
 
 
-## Standard transfer structure - Monarco HAT RX (SPI Master to Slave)
+## Standard transfer structure - Monarco HAT RX from Host (SPI Master to Slave)
 
 <pre>
 offset  size  content
@@ -108,14 +114,16 @@ Example:
 
 * `0xC352 = 50002` - prescaler = 64, TOP = 50000, f_PWM = 10 Hz
 
+For conversion form required frequency in Hz to the most sutable value of process data register function `monarco_util_pwm_freq_to_u16` can be found in file `src/monarco_util.c` in the [C language driver Repository](https://github.com/monarco/monarco-hat-driver-c/blob/master/src/monarco_util.c)
+
 ### CRC
 
 Master to Slave data integrity is protected by 16bit CRC (cyclic redundancy check). Monarco HAT (Slave) ignores data frames with bad CRC.
 
-There are numerous varieties of CRC-16 in common use which differs by the polynomial and its representation. Monarco HAT use the `Modbus RTU CRC-16` / `CRC-16-IBM` type (polynomial: `x^16 + x^15 + x^2 + 1` which is `0x8005` (normal) / `0xA001` (reversed), initial value: `0xFFFF`). 
+There are numerous varieties of CRC-16 in common use which differs by the polynomial and its representation. Monarco HAT use the `Modbus RTU CRC-16` / `CRC-16-IBM` type, polynomial: `x^16 + x^15 + x^2 + 1` which is `0x8005` (normal) / `0xA001` (reversed), initial value: `0xFFFF`. 
 
 
-## Standard transfer structure - Monarco HAT TX (Slave to Master)
+## Standard transfer structure - Monarco HAT TX to Host (Slave to Master)
 
 <pre>
 offset  size
@@ -149,6 +157,16 @@ offset
 
 * *Counter 1/2 reset done* - signalisation of counter reset operation completion (see *Control byte* description above).
 * *Sign of life 0/1* - is incremented with each data transfer as 2bit number low/high bit, can be used by *SPI Master* as health check of the Monarco HAT.
+
+### Analog values
+
+Values of analog inputs are internally processed by factory-calibration constants.
+
+For the voltage measurement mode, full range input value 10.0 V equals to process data value 4095. 
+
+For the current-loop measurement mode, theoreretical full range input value 52.475 mA equals to process data value 4095.
+
+Function for analog values conversion can be found in file `src/monarco_util.c` in the [C language driver Repository](https://github.com/monarco/monarco-hat-driver-c/blob/master/src/monarco_util.c) 
 
 ### CRC
 
