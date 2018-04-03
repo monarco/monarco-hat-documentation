@@ -7,11 +7,11 @@ Monarco HAT is an add-on board which provides input-output interfaces designed a
 
 Main features of the Monarco HAT:
 
-* 4 x digital IN, configurable as two up/down counters or encoder inputs
+* 4 x digital IN, configurable as two up/down counters or encoder inputs, up to 500 kHz
 * 4 x digital OUT, configurable as PWM/frequency generators, 1 Hz to 100 kHz range
-* 2 x analog IN, 2 x analog OUT
+* 2 x analog IN (0 to 10 V / 0 to 20 mA), 2 x analog OUT (0 to 10 V)
 * 1 x RS-485
-* 1 x  1-Wire bus
+* 1 x 1-Wire bus
 * 9 x LED indicator
 * Power supply: 10 to 30 V DC
 * Battery-backed RTC chip
@@ -35,13 +35,21 @@ This repository contains various documentation for the Monarco HAT:
 ## Other Resources
 
 * [Monarco Homepage - https://www.monarco.io/](https://www.monarco.io/)
-* [Repository - Monarco HAT Flash Firmware Downloader](https://github.com/monarco/monarco-hat-firmware-bin)
+* [Repository - Monarco HAT Firmware Images and Tools](https://github.com/monarco/monarco-hat-firmware-bin)
 * [Repository - C language driver library for the Monarco HAT](https://github.com/monarco/monarco-hat-driver-c)
 * [Repository - Node.js driver library for Monarco HAT](https://github.com/monarco/monarco-hat-driver-nodejs)
 * [Repository - Node-RED driver library for Monarco HAT](https://github.com/monarco/node-red-contrib-monarco-hat)
 
 
 ## News
+
+### 2018/04/03
+
+Updated version of Hardware Reference Manual is published.
+
+**For Raspbian users** - Monarco HAT boards shipped since 01/2018 (Series F) have updated ID EEPROM for full compatibility with Raspbian Linux kernel 4.9+ (tested also on 4.14), so the manual configuration of overlay file is not needed anymore for the new boards.
+
+ID EEPROM on the old boards can be upgraded to be fully compatible with the latest Raspbian releases using [Monarco HAT Firmware Downloader](https://github.com/monarco/monarco-hat-firmware-bin).
 
 ### 2017/09/14
 

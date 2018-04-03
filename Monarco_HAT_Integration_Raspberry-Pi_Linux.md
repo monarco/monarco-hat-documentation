@@ -50,8 +50,8 @@ Switching `/dev/ttyAMA0` UART to GPIO header does not work anymore on Raspberry 
 
 On the **I2C-1** (`/dev/i2c-1`) Raspberry Pi bus, Monarco HAT contains following devices: 
 
-* Real Time Clock MCP79410, address `0x6f`, Linux driver module `rtc_ds1307`, device `mcp7941x`, address `0x6f` (RTC/SRAM) + `0x57` (EEPROM)
-* 1-Wire Interface Controller, address `0x18`, Linux driver module `ds2482`, device `ds2482`, address `0x18`
+* Real Time Clock MCP79410, Linux driver module `rtc_ds1307`, device `mcp7941x`, address `0x6f` (RTC/SRAM) + `0x57` (EEPROM)
+* 1-Wire Interface Controller, Linux driver module `ds2482`, device `ds2482`, address `0x18`
 
 Thanks to Device Tree Overlay in HAT ID EEPROM, no additional configuration is needed in Raspbian Linux to make these devices working.
 
