@@ -53,7 +53,7 @@ If valid process data are not received by Monarco HAT (*SPI Slave*) for longer t
 Byte order of 16/32 bit values is little-endian, e.g. least significant byte first.
 
 
-## Standard transfer structure - Monarco HAT RX from Host (SPI Master to Slave)
+## Standard transfer structure - Host (RPi) TX to Monarco HAT (SPI Master to Slave)
 
 <pre>
 offset  size  content
@@ -123,7 +123,7 @@ Master to Slave data integrity is protected by 16bit CRC (cyclic redundancy chec
 There are numerous varieties of CRC-16 in common use which differs by the polynomial and its representation. Monarco HAT use the `Modbus RTU CRC-16` / `CRC-16-IBM` type, polynomial: `x^16 + x^15 + x^2 + 1` which is `0x8005` (normal) / `0xA001` (reversed), initial value: `0xFFFF`. 
 
 
-## Standard transfer structure - Monarco HAT TX to Host (Slave to Master)
+## Standard transfer structure - Host (RPi) RX from Monarco HAT (Slave to Master)
 
 <pre>
 offset  size
