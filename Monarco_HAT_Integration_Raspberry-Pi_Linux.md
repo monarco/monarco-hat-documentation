@@ -40,11 +40,13 @@ For additional details about Device Tree Overlay and notes for Raspberry Pi 3 an
 
 ## NOTE FOR RASPBIAN USERS
 
-Since 2017-06 release, Raspbian Jessie upgraded kernel from 4.4 to 4.9 searies, which partially breaks compatibility with device-tree overlay in Monarco HAT EEPROM.
+Since 2017-06 release, Raspbian Jessie upgraded kernel from 4.4 to 4.9 searies, which partially breaks compatibility with the old device-tree overlay format in Monarco HAT EEPROM.
 
-Switching `/dev/ttyAMA0` UART to GPIO header does not work anymore on Raspberry Pi 3 nor Raspberry Pi 2 with current Raspbian because of change in device-tree nodes names.
+On older Monarco HAT boards shipped before shipped before 10/2017, switching `/dev/ttyAMA0` UART to GPIO header does not work on Raspberry Pi 3 nor Raspberry Pi 2 without EEPROM update.
 
-**Please add [monarco-fix-4-9.dtbo](device-tree/monarco-fix-4-9.dtbo) to your `/boot/overlays` directory, and add `dtoverlay=monarco-fix-4-9` line to the `/boot/config.txt`.**
+**Please upgrade the HAT EEPROM on your older Monarco HATs if you are using Raspbian with kernel 4.9 or newer.** Please see: [Instructions and tools for EEPROM check and upgrade](https://github.com/monarco/monarco-hat-firmware-bin#id-eeprom-update)
+
+Note: Former workaround with extra file `monarco-fix-4-9.dtbo` is not needed anymore with upgraded EEPROM.
 
 ## Onboard I2C Devices
 
