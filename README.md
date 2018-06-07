@@ -43,6 +43,10 @@ This repository contains various documentation for the Monarco HAT:
 
 ## News
 
+### 2018/06/08
+
+New firmware v2.007 and updated SPI protocol documentation, see [Monarco HAT Firmware History](Monarco_HAT_Firmware_Roadmap.md).
+
 ### 2018/04/03
 
 Updated version of Hardware Reference Manual is published.

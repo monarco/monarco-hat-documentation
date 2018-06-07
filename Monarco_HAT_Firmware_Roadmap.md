@@ -1,6 +1,13 @@
-# Monarco HAT Firmware Development Roadmap
+# Monarco HAT Firmware History and Roadmap
 
 Monarco HAT firmware public repository: <https://github.com/monarco/monarco-hat-firmware-bin>
+
+
+## Features implemented in v2.007 Release
+
+* Fixed PWM initialization which was not correctly performed when writing COUNTER2 mode configuration (SDC `0x025`) as `off`
+* Fixed handling of zero PWM frequency - switches the PWM generation off
+* Added new PWM counting modes to COUNTER1 
 
 
 ## Features implemented in v2.006 Release
