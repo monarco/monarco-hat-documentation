@@ -43,6 +43,10 @@ This repository contains various documentation for the Monarco HAT:
 
 ## News
 
+### 2019/07/28
+
+New firmware v2.008 with Host Watchdog feature implemented. Updated SPI protocol documentation.
+
 ### 2018/06/08
 
 New firmware v2.007 and updated SPI protocol documentation, see [Monarco HAT Firmware History](Monarco_HAT_Firmware_Roadmap.md).

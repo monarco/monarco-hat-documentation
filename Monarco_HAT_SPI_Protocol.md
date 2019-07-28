@@ -1,8 +1,9 @@
 # Monarco HAT SPI Protocol Reference Manual
 
-**Valid for firmware version: v2.007 (`0x2007`)**
+**Valid for firmware version:** v2.008 (`0x2008` in register 0x001)
 
-Note: functions labelled [FUTURE] are currenly being under development, and will be part of next firmware release.
+Note: functions labelled [FUTURE] are currently being under development, and will be part of future firmware releases.
+
 
 ## Other Resources
 
@@ -38,7 +39,7 @@ Length of process channel is 20 bytes by default. For future extensions, *SPI Ma
 
 Service data are organized as set of 16 bit registers which can be read and written. See chapter *Service channel register description* below for details.
 
-If valid process data are not received by Monarco HAT (*SPI Slave*) for longer time than *Watchdog Period* (100 ms by default), internal alarm is triggered and all outputs are switched to default states.
+If valid process data is not received by Monarco HAT (*SPI Slave*) within specified interval (1500 ms by default, register 0x00F, see below for details), internal alarm is triggered and all outputs are switched to default states.
 
 
 ## SPI data transfer parameters
@@ -92,7 +93,8 @@ offset
 * *Status LED mask* - set `1` for control LED0 by *Control byte / Status LED on*; set `0` for default LED0 function (system status indication, see Monarco HAT Hardware Reference Manual).
 * *Status LED on* - set `1` for LED0 lit on; set `0` for LED0 off; only applicable if *Control byte / Status LED mask* set `1`.
 * *1-Wire power shutdown* - set `1` for 1-Wire bus power down (useful for bus reset in case of freeze); set `0` for normal operation.
-* *RESERVED* - allways set `0`.
+* *RESERVED* - 
+*  set `0`.
 * *Counter 1/2 reset* - set `1` for `COUNTER1/COUNTER2 Value` reset request; set `0` for normal operation. Reset operation is edge-triggered and its completion is signalised by *Status byte / Counter 1/2 reset done* bit.
 * [FUTURE] *Sign of Life 0/1* - should be incremented with each data transfer as 2bit number low/high bit, used by firmware as health check of *SPI Master*.
 
@@ -187,7 +189,7 @@ Both service data channel Request and Response share the same 4 byte data struct
 
 <pre>
 offset  size
-   0.0   2.0  VALUE - Data sent (request) / received (response).
+   0.0   2.0  VALUE - Data sent (request) / received (response). 16 bit unsigned value.
    2.0   1.4  ADDRESS - Register address to read / write.
    3.4   0.1  WRITE - Request write flag. If set, request VALUE will be written to ADDRESS.  
    3.5   0.1  ERROR - Response error flag. if set, response VALUE contains error code.
@@ -242,8 +244,11 @@ Note: Registers are read-only [R], read-write [RW] or write-only [W].
   * `bit 02` - AIN2 current loop shunt resistor enable
   * `bit 03..15` - RESERVED (write zeros)
 
-* **0x00F: PDC Watchdog Timeout [RW]**
-  * Unit: 1 ms; 0 = watchdog disabled; default = 100
+* **0x00F: Process Data Refresh Timeout [RW]**
+  * If no valid SPI trasfer is performed during this period all outputs are switched to default states.
+  * 0 = no timeout, feature disabled
+  * Unit: 1 ms
+  * Default = 1500 (since ver. 2.008, 100 before)
 
 ---
 
@@ -297,6 +302,18 @@ Note: Registers are read-only [R], read-write [RW] or write-only [W].
         * `2`: [FUTURE] falling
         * `3`: [FUTURE] both  
     * `bit 10..15` - RESERVED (write zeros)
+
+---
+
+* **0x030: Host Watchdog Timeout [RW]** (since ver. 2.008)
+  * 0 = Host Watchdog disabled (default)
+  * Unit: 1 s
+  * If the Monarco HAT receives no valid data via SPI within the watchdog interval, watchdog is triggered and the power supply for the host device (e.g. Raspberry Pi) is cut for 2 seconds. The interval typically allows for restarting and reloading your application.
+
+* **0x031: Host Watchdog Retry Timeout [RW]** (since ver. 2.008)
+  * 0 = Host Watchdog Retry feature disabled (default)
+  * Unit: 1 s, Minimum: 60
+  * The 2nd stage watchdog timer is started only when a watchdog-triggered reboot occurs. It is stopped when the first valid data arrives via SPI. If the Monarco HAT receives no valid data within the 2nd stage watchdog interval, watchdog is triggered and the power supply for the host device (e.g. Raspberry Pi) is cut for 2 seconds. The interval should allow for booting the operating system and starting your application.    
 
 ---
 
@@ -359,4 +376,4 @@ In the current firmware version, digital, analog and counter inputs sampling is 
 
 This approach works well for short cycle times about 5 ms when sampling synchronicity is preffered.
 
-With longer cycle times, you can prefer continuos sampling approach when you read as recent as possible input values. This option is currently being under development.
+With longer cycle times, you might prefer continuous sampling approach where you read as recent input values as possible. This option will be implemented if such a demand arises.

@@ -40,9 +40,9 @@ For additional details about Device Tree Overlay and notes for Raspberry Pi 3 an
 
 ## NOTE FOR RASPBIAN USERS
 
-Since 2017-06 release, Raspbian Jessie upgraded kernel from 4.4 to 4.9 searies, which partially breaks compatibility with the old device-tree overlay format in Monarco HAT EEPROM.
+Since 2017-06 release, Raspbian Jessie upgraded kernel from 4.4 to 4.9 series, which partially breaks compatibility with the old device-tree overlay format in Monarco HAT EEPROM.
 
-On older Monarco HAT boards shipped before shipped before 10/2017, switching `/dev/ttyAMA0` UART to GPIO header does not work on Raspberry Pi 3 nor Raspberry Pi 2 without EEPROM update.
+On older Monarco HAT boards shipped before 10/2017, switching `/dev/ttyAMA0` UART to GPIO header does not work on Raspberry Pi 3 nor Raspberry Pi 2 without EEPROM update.
 
 **Please upgrade the HAT EEPROM on your older Monarco HATs if you are using Raspbian with kernel 4.9 or newer.** Please see: [Instructions and tools for EEPROM check and upgrade](https://github.com/monarco/monarco-hat-firmware-bin#id-eeprom-update)
 

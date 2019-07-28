@@ -1,6 +1,11 @@
 # Monarco HAT Firmware History and Roadmap
 
-Monarco HAT firmware public repository: <https://github.com/monarco/monarco-hat-firmware-bin>
+Monarco HAT firmware public repository: <https://github.com/monarco/monarco-hat-firmware-bin> - includes firmware update tool and desription of the update procedure.
+
+
+## Features implemented in v2.008 Release
+
+* Implemented Host Watchdog function to reset your Raspberry Pi by power-cycling in case of software freeze. 
 
 
 ## Features implemented in v2.007 Release
@@ -41,7 +46,6 @@ Monarco HAT firmware public repository: <https://github.com/monarco/monarco-hat-
 * Counter direction controlled by external signal
 * Counter CAPTURE function
 * Persistent counter values
-* Watchdog for Rapberry Pi
 * Pulse/Dir profile generation for positioning (Motion Control)
 * Persistent configuration parameters
 
