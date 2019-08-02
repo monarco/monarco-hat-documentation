@@ -2,8 +2,7 @@
 
 **Valid for firmware version:** v2.008 (`0x2008` in register 0x001)
 
-Note: functions labelled [FUTURE] are currently being under development, and will be part of future firmware releases.
-
+Note: functions labelled [FUTURE] are under development and will be part of future firmware releases.
 
 ## Other Resources
 
@@ -244,11 +243,13 @@ Note: Registers are read-only [R], read-write [RW] or write-only [W].
   * `bit 02` - AIN2 current loop shunt resistor enable
   * `bit 03..15` - RESERVED (write zeros)
 
+---
+
 * **0x00F: Process Data Refresh Timeout [RW]**
-  * If no valid SPI trasfer is performed during this period all outputs are switched to default states.
+  * If no valid SPI trasfer is performed during this period, all outputs are switched to default states.
   * 0 = no timeout, feature disabled
   * Unit: 1 ms
-  * Default = 1500 (since ver. 2.008, 100 before)
+  * Default = 1500 (since ver. 2.008, formerly it was 100)
 
 ---
 
@@ -320,7 +321,6 @@ Note: Registers are read-only [R], read-write [RW] or write-only [W].
 * **0xF00-0xF3F: Persistent parameters area (64 registers, 128 byte)**
     * Now for manufacturer use only.
 
-
 ## SPI data transfer example
 
 <pre>
@@ -372,7 +372,7 @@ For implementation reasons, there should be some delay (10us is safe) between as
 
 ### Input sampling timing
 
-In the current firmware version, digital, analog and counter inputs sampling is triggered by SPI data transfer completion. This means you allways read almost one cycle "old" input values.
+In the current firmware version, digital, analog and counter inputs sampling is triggered by SPI data transfer completion. This means you always read almost one cycle "old" input values.
 
 This approach works well for short cycle times about 5 ms when sampling synchronicity is preffered.
 
